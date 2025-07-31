@@ -45,12 +45,15 @@ def load_ecommerc_data(selected_dataset):
     Function to load the selected e-commerce dataset.
     This function is called when the user clicks the 'Load Data' button.
     """
-    with st.spinner(f"Loading dataset {selected_dataset}"):
-        if selected_dataset == "E-commerce Data 1":
-            # Load the first sample dataset
-            st.session_state.ecommerce_data_raw = load_ecommerc_data_sample1()
-        elif selected_dataset == "E-commerce Data 2":
-            # Load the second sample dataset
-            st.session_state.ecommerce_data_raw = load_ecommerc_data_sample2()
-        else:
-            st.session_state.ecommerce_data_raw = None
+   
+    if selected_dataset == "E-commerce Data 1":
+        # Load the first sample dataset
+        st.session_state.ecommerce_data_raw = load_ecommerc_data_sample1()
+        st.session_state.ecommerce_data_raw_columns = [None] + st.session_state.ecommerce_data_raw.columns.tolist()
+    elif selected_dataset == "E-commerce Data 2":
+        # Load the second sample dataset
+        st.session_state.ecommerce_data_raw = load_ecommerc_data_sample2()
+        st.session_state.ecommerce_data_raw_columns = [None] + st.session_state.ecommerce_data_raw.columns.tolist()
+    else:
+        st.session_state.ecommerce_data_raw = None
+        st.session_state.ecommerce_data_raw_columns = None
