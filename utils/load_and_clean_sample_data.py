@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 
+
 def load_ecommerc_data_sample1():
     """
     Load a sample e-commerce dataset.
@@ -39,6 +40,8 @@ def load_ecommerc_data_sample2():
     ecommerce_data.drop_duplicates(inplace = True)
 
     return ecommerce_data
+
+
 
 def load_ecommerc_data(selected_dataset):
     """

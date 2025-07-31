@@ -49,15 +49,17 @@ ecommerce_data = pd.read_pickle("https://github.com/krinya/repeatradar/raw/refs/
 
 # Calculate cohorts
 basic_cohorts = generate_cohort_data(
-    data=ecommerce_data,
-    date_column='InvoiceDateTime', # Adjust this based on your dataset (should be datetime)
-    user_column='CustomerID', # Adjust this based on your dataset
-    cohort_period='M', # Monthly cohorts, can change this as needed
-    period_duration=30 # Track in 30-day periods, can adjust as needed
+    data=ecommerce_data, # Your transaction data as a pandas DataFrame
+    date_column='InvoiceDateTime', # Your date column name in your data (should be datetime)
+    user_column='CustomerID', # Your user ID column name in your data
+    cohort_period='M', # You can set this to 'D', 'W', 'M', 'Q', or 'Y' for daily, weekly, monthly, quarterly, or yearly cohorts
+    period_duration=30 # You can set this to the number of days you want to track cohorts
 )
-
-# Visualize
+basic_vohorts
+                                                                                                                             
+# Visualize cohorts with a heatmap
 from repeatradar import plot_cohort_heatmap
+                                                                                                                             
 heatmap_fig = plot_cohort_heatmap(
     cohort_data=basic_cohorts,
     title="📊 User Retention",
@@ -71,9 +73,9 @@ heatmap_fig.show()
 
 # Load default dataset automatically
 if "ecommerce_data_raw" not in st.session_state:
-    with st.spinner("Loading E-commerce Data 1... Please wait"):
+    with st.spinner("Loading E-commerce Data 1... Please wait, this csan take 1-2 minutes so be patient, the data is big!"):
         load_ecommerc_data("E-commerce Data 1")
-        st.success("✅ E-commerce Data 1 loaded successfully!")
+    st.success("✅ E-commerce Data 1 loaded successfully!")
 
 # Dataset Selection in main area
 
@@ -84,15 +86,16 @@ selected_dataset = st.sidebar.selectbox(
     index=0,
     help="Choose one of the sample datasets to analyze",
     key="main_dataset_selector")
+
 if st.sidebar.button("📥 Load Selected Dataset", type="primary"):
-    with st.spinner(f"Loading {selected_dataset}... Please wait"):
+    with st.spinner(f"Loading {selected_dataset}... Please wait, this can take 1-2 minutes so be patient, the data is big!"):
         load_ecommerc_data(selected_dataset)
-        # Clear existing analysis when switching datasets
-        if "cohort_data" in st.session_state:
-            del st.session_state.cohort_data
-        if "cohort_data_percent" in st.session_state:
-            del st.session_state.cohort_data_percent
-        st.success(f"✅ {selected_dataset} loaded successfully!")
+    # Clear existing analysis when switching datasets
+    if "cohort_data" in st.session_state:
+        del st.session_state.cohort_data
+    if "cohort_data_percent" in st.session_state:
+        del st.session_state.cohort_data_percent
+    st.success(f"✅ {selected_dataset} loaded successfully!")
 
 
 # Main content area
@@ -115,16 +118,29 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             st.metric("Total Columns", f"{st.session_state.ecommerce_data_raw.shape[1]:,}")
         
         # Show raw data option
-        show_raw_data = st.checkbox(
+        st.checkbox(
             "👁️ Show Raw Data Preview",
             value=False,
-            help="Check to display a preview of the raw dataset"
+            help="Check to display a preview of the raw dataset",
+            key="show_raw_data_checkbox"
         )
         
-        if show_raw_data:
-            with st.expander("📋 Raw Data Preview: the first 100 rows", expanded=True):
+        if st.session_state.get("show_raw_data_checkbox", False):
+
+            with st.expander("📋 Raw Data Preview", expanded=True):
+                
+                col1, col2, col3 = st.columns([1, 1, 1])
+
+                with col1:
+                    st.number_input("Number of Rows to Display", 
+                                    min_value=1, 
+                                    max_value=st.session_state.ecommerce_data_raw.shape[0], 
+                                    value=100, 
+                                    step=1, 
+                                    key="raw_data_row_limit")
+
                 st.dataframe(
-                    st.session_state.ecommerce_data_raw.head(100), 
+                    st.session_state.ecommerce_data_raw.head(st.session_state.get("raw_data_row_limit", 100)), 
                     use_container_width=True, 
                     hide_index=True
                 )
@@ -235,7 +251,7 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             help="Select the time period for grouping cohorts",
             key="cohort_period_display"
         )
-        
+        st.caption("Sets the cohort grouping period (controls table rows).")
         cohort_period = period_options[selected_period_display]
     
     with col2:
@@ -246,6 +262,7 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             help="Number of days to track cohort behavior",
             key="period_duration_selector"
         )
+        st.caption("Sets the duration for each cohort period (controls table columns).")
     
     with col3:
         # Generate Analysis Button
@@ -360,6 +377,32 @@ if st.session_state.get("cohort_data") is not None:
     )
     
     st.plotly_chart(cohort_heatmap, use_container_width=True)
+
+    st.expander("How to interpret the heatmap? And what you can learn from them?", expanded=False).markdown("""
+    **How to Read the Chart**
+
+    **Rows (Cohorts)**  
+    Each row represents a specific cohort, which is a group of users who signed up or made their first transaction in the same period (e.g., January 2024). The first column shows the initial size of that cohort.
+
+    **Columns (Time Elapsed)**  
+    The columns track the activity of each cohort over subsequent periods after they were acquired (e.g., Month 1, Month 2, etc.). Month 0 represents the initial acquisition period.
+
+    **Cell Values (Active Users)**  
+    Each cell shows the absolute count of users from a specific cohort who were active during that follow-up period. For example, the number in the "January 2024" row and "Month 3" column is the exact number of users acquired in January who came back in April.
+
+    **Color Intensity**  
+    The color provides a quick visual guide. Darker shades indicate a higher number of active users, making it easy to spot strong-performing cohorts and engagement trends.
+
+    **What You Can Learn From This Chart?**
+
+    This chart provides the raw data needed to assess business health and track whether your user retention is improving.
+
+    Here are a few examples of insights you can gather:
+
+    - **Track Acquisition:** You can see exactly how many users you acquired in a given period. For instance, "We acquired 421 users in the January 2021 cohort."
+    - **Monitor Raw Retention:** You can track the raw number of users who return over time. For example, "Of the 421 users from the January cohort, 107 came back in Month 1, and 118 in Month 2."
+    - **Compare Cohort Performance:** By comparing rows, you can see if newer cohorts are retaining more users than older ones.
+    """)
     
     # Show data table checkbox for absolute values
     if is_using_value_column and current_agg_func:
@@ -374,7 +417,11 @@ if st.session_state.get("cohort_data") is not None:
     )
     
     if show_absolute_data:
-        st.dataframe(st.session_state.cohort_data, use_container_width=True, hide_index=False)
+        st.session_state.cohort_data_fixed_index = st.session_state.cohort_data.copy()
+        st.session_state.cohort_data_fixed_index = st.session_state.cohort_data_fixed_index.reset_index()
+        # covert datetime to date
+        st.session_state.cohort_data_fixed_index['cohort_period'] = st.session_state.cohort_data_fixed_index['cohort_period'].dt.date
+        st.dataframe(st.session_state.cohort_data_fixed_index, use_container_width=True, hide_index=True)
     
     # Retention Rates Heatmap with controls (only show if no value column is used)
     if st.session_state.get("cohort_data_percent") is not None:
@@ -429,7 +476,11 @@ if st.session_state.get("cohort_data") is not None:
             )
             
             if show_retention_data:
-                st.dataframe(st.session_state.cohort_data_percent, use_container_width=True, hide_index=False)
+                st.session_state.cohort_data_percent_fixed_index = st.session_state.cohort_data_percent.copy()
+                st.session_state.cohort_data_percent_fixed_index = st.session_state.cohort_data_percent_fixed_index.reset_index()
+                # covert datetime to date
+                st.session_state.cohort_data_percent_fixed_index['cohort_period'] = st.session_state.cohort_data_percent_fixed_index['cohort_period'].dt.date
+                st.dataframe(st.session_state.cohort_data_percent_fixed_index, use_container_width=True, hide_index=True)
         else:
             st.info("📊 **Note:** Retention rate analysis is only available for user count analysis (when no value column is selected). Currently showing value-based cohort analysis.")
 
