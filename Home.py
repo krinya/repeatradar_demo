@@ -1,7 +1,14 @@
+"""
+RepeatRadar Streamlit Demo Application
+
+This Streamlit app demonstrates cohort analysis using the RepeatRadar package.
+
+"""
+
 import streamlit as st
 import pandas as pd
 from repeatradar import generate_cohort_data, plot_cohort_heatmap
-from utils.load_and_clean_sample_data import load_ecommerc_data
+from utils.load_and_clean_sample_data import load_ecommerce_data, load_ecommerce_data_sample1, load_ecommerce_data_sample2, get_dataset_columns
 from utils.helper_functions import handle_generate_cohort_data
 from utils.loading_screen import show_simple_loading
 
@@ -81,16 +88,44 @@ with st.expander("🚀 Getting Started with RepeatRadar in Python", expanded=Fal
     ```
     """)
 
-# --- Initial Data Loading ---
-if "ecommerce_data_raw" not in st.session_state:
-    # Show loading screen
+# --- Initial Data Loading with Caching ---
+@st.cache_data(ttl=86400)  # Cache both datasets for 24 hours
+def initialize_datasets():
+    """
+    Pre-load both datasets using caching for efficient access across sessions.
+    This runs once every 24 hours and is shared across all users.
+    """
+    data1 = load_ecommerce_data_sample1()
+    data2 = load_ecommerce_data_sample2()
+    cols1 = get_dataset_columns("E-commerce Data 1")
+    cols2 = get_dataset_columns("E-commerce Data 2")
+    
+    return {
+        "E-commerce Data 1": {"data": data1, "columns": cols1},
+        "E-commerce Data 2": {"data": data2, "columns": cols2}
+    }
+
+# Initialize cached datasets
+@st.cache_data(ttl=86400)
+def get_cached_datasets():
+    """Get all datasets with 24-hour caching."""
+    return initialize_datasets()
+
+# Check if datasets are already cached to show loading screen if needed
+if "datasets_loaded" not in st.session_state:
+    # Show loading screen while datasets are being cached for the first time
     show_simple_loading()
+    st.info("🔄 Loading datasets into cache... This happens once every 24 hours and is shared across all users.")
     
-    # Load data in the background
-    load_ecommerc_data("E-commerce Data 1")
+    # Load datasets into cache (this only happens once every 24 hours)
+    cached_datasets = get_cached_datasets()
     
-    # Rerun to show the loaded content
+    # Mark as loaded to avoid showing loading screen again
+    st.session_state.datasets_loaded = True
     st.rerun()
+else:
+    # Datasets are already cached, load them quickly
+    cached_datasets = get_cached_datasets()
 
 # --- Auto-detect columns for cohort analysis (moved here to be available for sidebar) ---
 def get_auto_columns(dataset_name, columns):
@@ -109,7 +144,23 @@ def get_auto_columns(dataset_name, columns):
         date_col, cust_col, value_col = None, None, None
     return date_col, cust_col, value_col
 
-# Get columns list for current dataset
+# Get columns list for current dataset - now from cached data
+def get_current_dataset_info(selected_dataset):
+    """Get current dataset info from cache"""
+    if selected_dataset in cached_datasets:
+        return cached_datasets[selected_dataset]["columns"]
+    return []
+
+# Initialize default dataset in session state if not present
+if "current_dataset" not in st.session_state:
+    st.session_state.current_dataset = "E-commerce Data 1"
+
+# Set current dataset data from cache
+current_dataset_info = cached_datasets.get(st.session_state.current_dataset, {})
+if current_dataset_info:
+    st.session_state.ecommerce_data_raw = current_dataset_info.get("data")
+    st.session_state.ecommerce_data_raw_columns = current_dataset_info.get("columns", [])
+
 columns_list = st.session_state.get("ecommerce_data_raw_columns", [])
 
 # --- Sidebar Controls ---
@@ -121,25 +172,34 @@ with st.sidebar:
     selected_dataset = st.selectbox(
         "Choose a sample dataset:",
         options=["E-commerce Data 1", "E-commerce Data 2", "Upload Your Own (Coming Soon)"],
-        index=0,
+        index=0 if st.session_state.current_dataset == "E-commerce Data 1" else 1,
         key="main_dataset_selector",
         help="Select which dataset to analyze"
     )
     
     if st.button("📥 Load Dataset", type="primary", use_container_width=True):
         with st.spinner(f"Loading {selected_dataset}..."):
-            load_ecommerc_data(selected_dataset)
-        # Clear existing analysis when switching datasets
-        if "cohort_data" in st.session_state:
-            del st.session_state.cohort_data
-        if "cohort_data_percent" in st.session_state:
-            del st.session_state.cohort_data_percent
-        # Update columns list after loading new dataset
-        columns_list = st.session_state.get("ecommerce_data_raw_columns", [])
-        st.success(f"✅ {selected_dataset} loaded!")
+            # Update session state with cached data
+            if selected_dataset in cached_datasets:
+                st.session_state.current_dataset = selected_dataset
+                st.session_state.ecommerce_data_raw = cached_datasets[selected_dataset]["data"]
+                st.session_state.ecommerce_data_raw_columns = cached_datasets[selected_dataset]["columns"]
+                
+                # Clear existing analysis when switching datasets
+                if "cohort_data" in st.session_state:
+                    del st.session_state.cohort_data
+                if "cohort_data_percent" in st.session_state:
+                    del st.session_state.cohort_data_percent
+                
+                # Update columns list after loading new dataset
+                columns_list = st.session_state.get("ecommerce_data_raw_columns", [])
+                st.success(f"✅ {selected_dataset} loaded!")
+            else:
+                st.error("Dataset not available in cache.")
         st.rerun()  # Refresh to update the sidebar options
     
     st.caption("Once you switch datasets, press the button above to load it, and wait a bit.")
+    
     
     # Display Options
     st.subheader("👁️ Display Options")
@@ -184,6 +244,7 @@ with st.sidebar:
 
 
 # --- Main Content Area ---
+# Data is now always available from cache, so we don't need the loading check
 if st.session_state.get("ecommerce_data_raw") is not None:
     
     # --- Dataset Overview ---
@@ -273,7 +334,7 @@ if st.session_state.get("ecommerce_data_raw") is not None:
                     aggregation_function=aggregation_function,
                     output_format="pivot"
                 )
-            st.success("✅ Analysis updated!")
+            st.success("✅ Analysis updated, see the heatmap and the data bellow!")
     
     with button_col2:
         if st.button("🔄 Reset to Defaults", type="secondary", use_container_width=True):
@@ -392,11 +453,8 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             df_percent_display = st.session_state.cohort_data_percent.copy().reset_index()
             df_percent_display['cohort_period'] = df_percent_display['cohort_period'].dt.date
             st.dataframe(df_percent_display, use_container_width=True, hide_index=True)
-        
-else:
-    show_simple_loading()
-    st.stop()
 
+# Since data is now cached and always available, we don't need the fallback loading screen
 
 # Update sidebar footer
 with st.sidebar:
