@@ -3,6 +3,7 @@ import pandas as pd
 from repeatradar import generate_cohort_data, plot_cohort_heatmap
 from utils.load_and_clean_sample_data import load_ecommerc_data
 from utils.helper_functions import handle_generate_cohort_data
+from utils.loading_screen import show_simple_loading
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -82,9 +83,14 @@ with st.expander("🚀 Getting Started with RepeatRadar in Python", expanded=Fal
 
 # --- Initial Data Loading ---
 if "ecommerce_data_raw" not in st.session_state:
-    with st.spinner("Loading default e-commerce dataset..."):
-        load_ecommerc_data("E-commerce Data 1")
-    st.success("✅ Default dataset loaded successfully!")
+    # Show loading screen
+    show_simple_loading()
+    
+    # Load data in the background
+    load_ecommerc_data("E-commerce Data 1")
+    
+    # Rerun to show the loaded content
+    st.rerun()
 
 # --- Auto-detect columns for cohort analysis (moved here to be available for sidebar) ---
 def get_auto_columns(dataset_name, columns):
@@ -388,7 +394,8 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             st.dataframe(df_percent_display, use_container_width=True, hide_index=True)
         
 else:
-    st.info("⏳ Please wait while the default dataset is being loaded...")
+    show_simple_loading()
+    st.stop()
 
 
 # Update sidebar footer
