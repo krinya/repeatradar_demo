@@ -26,7 +26,7 @@ def show_simple_loading():
         <h2 style="color: #1f2937; margin-bottom: 20px;">Loading RepeatRadar Demo</h2>
         <p style="color: #6b7280; margin-bottom: 40px;">Preparing cohort analysis tools...</p>
         <div style="padding: 20px; background: #f8fafc; border-radius: 10px; border-left: 4px solid #3b82f6;">
-            <h3 style="margin: 0 0 10px 0; color: #1f2937;">👋 Hi, I'm Kristof Menyhert</h3>
+            <h3 style="margin: 0 0 10px 0; color: #1f2937;">👋 Hi, I'm Kristof</h3>
             <p style="margin: 0 0 10px 0; color: #6b7280;">Data Scientist</p>
             <p style="margin: 0 0 15px 0; color: #1f2937; font-weight: bold;">💼 Open to Work</p>
             <a href="https://www.linkedin.com/in/kristof-menyhert/" target="_blank" 
