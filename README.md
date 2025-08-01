@@ -1,19 +1,39 @@
-# 🎈 Blank app template
+# 📡 RepeatRadar Demo Dashboard
 
-A simple Streamlit app template for you to modify!
+An interactive Streamlit dashboard showcasing **RepeatRadar**, my Python package for cohort analysis. This demo lets you explore user retention and revenue patterns through beautiful, interactive visualizations.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+## What's RepeatRadar?
 
-### How to run it on your own machine
+RepeatRadar simplifies cohort analysis - helping businesses understand user behavior, retention, and value generation over time. Whether you're tracking customer lifetime value or analyzing user engagement, RepeatRadar makes it easy with just a few lines of Python code.
 
-1. Install the requirements
+**Key Features:**
+- 🔍 Simple API for complex cohort analysis
+- 📊 Interactive heatmap visualizations
+- ⚙️ Flexible time periods (daily, weekly, monthly, quarterly, yearly)
+- 📈 Multiple metrics support (user counts, revenue, custom values)
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+## Try the Demo
 
-2. Run the app
+This dashboard includes:
+- Interactive cohort analysis with real e-commerce datasets
+- Customizable time periods and metrics
+- Live code examples and documentation
+- Side-by-side dataset comparisons
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+## Running Locally
+
+Make sure you have [uv](https://docs.astral.sh/uv/) installed, then:
+
+```bash
+uv run streamlit run Home.py
+```
+
+That's it! The dashboard will open in your browser at `http://localhost:8501`.
+
+## Links
+
+- 🔗 [RepeatRadar Package](https://github.com/krinya/repeatradar)
+- 📚 [Documentation](https://krinya.github.io/repeatradar/)
+- 💻 [Dashboard Source Code](https://github.com/krinya/repeatradar_demo)
+
+Built with using Streamlit and RepeatRadar

@@ -23,7 +23,9 @@ with col1:
     Welcome to the interactive demo for **RepeatRadar**, a Python package I developed for streamlined cohort analysis. 
     This dashboard showcases the package's core functionality and demonstrates my ability to build and document 
     end-to-end data science projects.
-    
+
+    Cohort analysis is a simple but effective technique to gain insights about any business based on their transaction data.
+
     **What you can do here:**
     - 🔍 **Explore Cohort Analysis:** Interactively analyze user retention and value-based cohorts
     - 📊 **Visualize Data:** Generate beautiful, interactive heatmaps
@@ -39,7 +41,7 @@ with col2:
     st.markdown("💻 [Dashboard Code](https://github.com/krinya/repeatradar_demo)")
 
 # --- Quickstart Guide ---
-with st.expander("🚀 Getting Started with RepeatRadar", expanded=False):
+with st.expander("🚀 Getting Started with RepeatRadar in Python", expanded=False):
     st.markdown("""
     You can easily install the package using pip:
     ```bash
@@ -130,6 +132,8 @@ with st.sidebar:
         columns_list = st.session_state.get("ecommerce_data_raw_columns", [])
         st.success(f"✅ {selected_dataset} loaded!")
         st.rerun()  # Refresh to update the sidebar options
+    
+    st.caption("Once you switch datasets, press the button above to load it, and wait a bit.")
     
     # Display Options
     st.subheader("👁️ Display Options")
@@ -246,7 +250,6 @@ if st.session_state.get("ecommerce_data_raw") is not None:
                 aggregation_function=aggregation_function,
                 output_format="pivot"
             )
-        st.success("✅ Analysis complete!")
 
     # Create action buttons - two full width columns
     button_col1, button_col2 = st.columns(2)
@@ -276,7 +279,7 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             st.rerun()
     
     if not can_generate:
-        st.error("⚠️ Could not auto-detect required columns for cohort analysis. Please check your dataset.")
+        st.error("⚠️ Could not auto-detect required columns for cohort analysis. Please check your dataset, maybe you switched dataset and did not click the 'Load Dataset' button.")
 
     # --- Results Display ---
     if st.session_state.get("cohort_data") is not None:
