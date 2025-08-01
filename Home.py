@@ -225,7 +225,7 @@ if st.session_state.get("ecommerce_data_raw") is not None:
 
     with time_col2:
         period_duration = st.selectbox(
-            "Tracking Duration (days)",
+            "Period Duration (days)",
             options=[1, 7, 30, 90, 180, 365],
             index=2,  # Default to 30 days
             help="Length of each period for tracking cohort activity"

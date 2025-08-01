@@ -191,4 +191,4 @@ with link_col3:
 st.success("🚀 **Ready to try RepeatRadar?** Head back to the main dashboard to explore interactive cohort analysis!")
 
 if st.button("🏠 Back to Main Dashboard", type="primary", use_container_width=True):
-    st.switch_page("streamlit_app.py")
+    st.switch_page("Home.py")
