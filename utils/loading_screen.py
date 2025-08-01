@@ -38,10 +38,10 @@ def show_simple_loading():
             </p>
         </div>
         <p style="margin-top: 30px; color: #9ca3af; font-size: 14px;">
-            This may take up to 1 minute
+            This may take up to 1 minute because the hardware behind the free version of Streamlit Cloud is slow.
             <span id="countdown" style="margin-left:10px; color:#3b82f6;"></span>
         </p>
-        <p style="margin-top: 5px; color: #6b7280; font-size: 15px;">Please wait a bit until the data loads.</p>
+        <p style="margin-top: 5px; color: #6b7280; font-size: 15px;">Please wait a moment while the data loads.</p>
         <script>
         let seconds = 60;
         function updateCountdown() {

@@ -28,17 +28,22 @@ col1, col2 = st.columns([3, 1])
 
 with col1:
     st.markdown("""
-    Welcome to the interactive demo for **RepeatRadar**, a Python package I developed for streamlined cohort analysis. 
-    This dashboard showcases the package's core functionality and demonstrates my ability to build and document 
-    end-to-end data science projects.
+    Welcome to the RepeatRadar Interactive Demo
 
-    Cohort analysis is a simple but effective technique to gain insights about any business based on their transaction data.
+    This dashboard showcases **RepeatRadar**, a Python package I developed to make cohort analysis intuitive and insightful. 
 
-    **What you can do here:**
-    - 🔍 **Explore Cohort Analysis:** Interactively analyze user retention and value-based cohorts
-    - 📊 **Visualize Data:** Generate beautiful, interactive heatmaps
-    - ⚙️ **Customize Analysis:** Choose different time periods and aggregation methods
-    - 📈 **Compare Datasets:** Switch between different sample datasets
+    This project demonstrates a complete end-to-end data solution: from the development and documentation of a reusable Python package to its deployment as this user-friendly, interactive web app.
+
+    **What can you do here?**
+
+    - 🔍 **Explore Cohorts:** Interactively analyze both user retention and customer value.
+    - 📊 **Visualize Trends:** Instantly generate beautiful, dynamic heatmaps.
+    - ⚙️ **Customize Your View:** Adjust time periods, metrics, and aggregation methods.
+    - 🔄 **Compare Datasets:** Switch between multiple sample datasets using the sidebar.
+
+    **Ready to dive in? Get started by selecting a dataset and configuring your analysis in the sidebar!**
+
+    *The heatmaps and data tables you see here can be generated in your own Python projects with just a few lines of code using the **RepeatRadar** package.*
     """)
 
 with col2:
