@@ -27,20 +27,16 @@ def handle_generate_cohort_data(data, date_column, customer_id_column, cohort_pe
                 output_format=output_format,
             )
 
-            # Only generate retention rate data when no value column is used
-            # Retention rate calculation is only available for user count analysis
-            if value_column is None:
-                st.session_state.cohort_data_percent = generate_cohort_data(
-                    data=data,
-                    date_column=date_column,
-                    user_column=customer_id_column,
-                    cohort_period=cohort_period,
-                    period_duration=period_duration,
-                    calculate_retention_rate=True,
-                    value_column=None,  # Always None for retention rate
-                    aggregation_function=None,  # Always None for retention rate
-                    output_format=output_format,
-                )
-            else:
-                # When using value column, create a copy without retention rates
-                st.session_state.cohort_data_percent = st.session_state.cohort_data.copy()
+            # Always generate retention rate data regardless of value column
+            # This provides additional insights even for value-based analysis
+            st.session_state.cohort_data_percent = generate_cohort_data(
+                data=data,
+                date_column=date_column,
+                user_column=customer_id_column,
+                cohort_period=cohort_period,
+                period_duration=period_duration,
+                calculate_retention_rate=True,
+                value_column=None,  # Always None for retention rate
+                aggregation_function=None,  # Always None for retention rate
+                output_format=output_format,
+            )
