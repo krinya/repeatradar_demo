@@ -28,9 +28,9 @@ col1, col2 = st.columns([3, 1])
 
 with col1:
     st.markdown("""
-    Welcome to the RepeatRadar Interactive Demo
+    Welcome to the RepeatRadar package Interactive Demo
 
-    This dashboard showcases **RepeatRadar**, a Python package I developed to make cohort analysis intuitive and insightful. 
+    This dashboard showcases **RepeatRadar**, a Python package I developed to make cohort analysis easy.
 
     This project demonstrates a complete end-to-end data solution: from the development and documentation of a reusable Python package to its deployment as this user-friendly, interactive web app.
 
