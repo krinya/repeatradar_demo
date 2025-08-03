@@ -28,22 +28,22 @@ col1, col2 = st.columns([3, 1])
 
 with col1:
     st.markdown("""
-    Welcome to the RepeatRadar package Interactive Demo.
+    Welcome to RepeatRadar – an interactive demo of my Python package for cohort analysis.
+    
+    I built RepeatRadar to solve a common problem: cohort analysis is incredibly valuable for understanding customer behavior, but it's often complex to implement. With RepeatRadar, you can generate comprehensive cohort insights with just a few lines of code.
 
-    This dashboard showcases **RepeatRadar**, a Python package I developed to make cohort analysis easy. Basicly with just a few lines of code, you can generate cohort data and visualize it just as you see below here.
+    This dashboard shows the package in action and demonstrates how I approach building complete data solutions – from developing a well-documented Python package to creating an intuitive web interface.
 
-    This project demonstrates a complete end-to-end data solution: from the development and documentation of a reusable Python package to its deployment as this user-friendly, interactive web app.
+    **What you can explore:**
 
-    **What can you do here?**
+    - 🔍 **Cohort Analysis:** Track user retention and analyze customer lifetime value patterns
+    - 📊 **Interactive Visualizations:** Generate publication-ready heatmaps that update in real-time  
+    - ⚙️ **Flexible Configuration:** Experiment with different time periods, metrics, and aggregation methods
+    - 🔄 **Multiple Datasets:** Compare results across different business scenarios
 
-    - 🔍 **Explore Cohorts:** Interactively analyze both user retention and customer value.
-    - 📊 **Visualize Trends:** Instantly generate beautiful, dynamic heatmaps.
-    - ⚙️ **Customize Your View:** Adjust time periods, metrics, and aggregation methods.
-    - 🔄 **Compare Datasets:** Switch between multiple sample datasets using the sidebar.
+    **Jump right in by picking a dataset from the sidebar and tweaking the analysis settings.**
 
-    **Ready to dive in? Get started by selecting a dataset and configuring your analysis in the sidebar!**
-
-    *The heatmaps and data tables you see here can be generated in your own Python projects with just a few lines of code using the **RepeatRadar** package.*
+    Everything you see here – the charts, tables, and insights – can be reproduced in your own Python environment using RepeatRadar. No complex setup required.
     """)
 
 with col2:
