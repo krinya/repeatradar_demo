@@ -43,7 +43,7 @@ with col1:
 
     **Jump right in by picking a dataset from the sidebar and tweaking the analysis settings.**
 
-    Everything you see here – the charts, tables, and insights – can be reproduced in your own Python environment using RepeatRadar. No complex setup required.
+    Everything you see here – the charts, tables, and insights – can be reproduced in your own Python environment using RepeatRadar. No complex setup required, see the code by expanding the box below.
     """)
 
 with col2:
