@@ -30,16 +30,16 @@ with col1:
     st.markdown("""
     Welcome to RepeatRadar – an interactive demo of my Python package for cohort analysis.
     
-    I built RepeatRadar to solve a common problem: cohort analysis is incredibly valuable for understanding customer behavior, but it's often complex to implement. With RepeatRadar, you can generate comprehensive cohort insights with just a few lines of code.
+    I built RepeatRadar to solve a common problem: cohort analysis is incredibly valuable for understanding customer behavior, but it can be time-consuming to implement and difficult to adjust its settings. With RepeatRadar, you can generate comprehensive cohort insights with just a few lines of code.
 
-    This dashboard shows the package in action and demonstrates how I approach building complete data solutions – from developing a well-documented Python package to creating an intuitive web interface.
+    This dashboard showcases the package in action and demonstrates how I approach building complete data solutions – from developing a well-documented Python package to creating an intuitive web interface.
 
     **What you can explore:**
 
     - 🔍 **Cohort Analysis:** Track user retention and analyze customer lifetime value patterns
-    - 📊 **Interactive Visualizations:** Generate publication-ready heatmaps that update in real-time  
+    - 📊 **Interactive Visualizations:** Generate publication-ready heatmaps that update in real time  
     - ⚙️ **Flexible Configuration:** Experiment with different time periods, metrics, and aggregation methods
-    - 🔄 **Multiple Datasets:** Compare results across different business scenarios
+    - 🔄 **Multiple Datasets:** Compare results across various business scenarios
 
     **Jump right in by picking a dataset from the sidebar and tweaking the analysis settings.**
 
