@@ -416,7 +416,7 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             """)
 
         # Show the main cohort data right after the heatmap
-        st.subheader(f"📋 Raw Data: {main_metric_label}")
+        st.subheader(f"📋 Data: {main_metric_label}")
         df_display = st.session_state.cohort_data.copy().reset_index()
         df_display['cohort_period'] = df_display['cohort_period'].dt.date
         st.dataframe(df_display, use_container_width=True, hide_index=True)
@@ -454,7 +454,7 @@ if st.session_state.get("ecommerce_data_raw") is not None:
             st.plotly_chart(retention_heatmap, use_container_width=True)
             
             # Show retention data right after the retention heatmap
-            st.subheader("📋 Raw Data: Retention Percentages")
+            st.subheader(f"📋 Data: {main_metric_label} Retention Percentages")
             df_percent_display = st.session_state.cohort_data_percent.copy().reset_index()
             df_percent_display['cohort_period'] = df_percent_display['cohort_period'].dt.date
             st.dataframe(df_percent_display, use_container_width=True, hide_index=True)
