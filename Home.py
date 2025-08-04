@@ -30,9 +30,9 @@ with col1:
     st.markdown("""
     Welcome to RepeatRadar – an interactive demo of my Python package for cohort analysis.
     
-    I built RepeatRadar to solve a common problem: cohort analysis is incredibly valuable for understanding customer behavior, but it can be time-consuming to implement and difficult to adjust its settings. With RepeatRadar, you can generate comprehensive cohort insights with just a few lines of code.
+    With RepeatRadar, you can easily generate cohort data and visualize user retention patterns with heatmaps. This package is designed to simplify cohort analysis, making it accessible to data scientists and analysts alike. Install it via `pip install repeatradar` and start analyzing your transaction data!
 
-    This dashboard showcases the package in action and demonstrates how I approach building complete data solutions – from developing a well-documented Python package to creating an intuitive web interface.
+    This dashboard showcases the package in action and demonstrates my ability to build a Python package and use it in an interactive dashboard – from developing a well-documented Python package to creating an intuitive web interface based on it.
 
     **What you can explore:**
 
@@ -41,9 +41,9 @@ with col1:
     - ⚙️ **Flexible Configuration:** Experiment with different time periods, metrics, and aggregation methods
     - 🔄 **Multiple Datasets:** Compare results across various business scenarios
 
-    **Jump right in by picking a dataset from the sidebar and tweaking the analysis settings.**
+    **Jump right in by picking a dataset from the sidebar and adjusting the analysis settings.**
 
-    Everything you see here – the charts, tables, and insights – can be reproduced in your own Python environment using RepeatRadar. No complex setup required, see the code by expanding the box below.
+    Everything you see here – the charts, tables, and insights – can be reproduced in your own Python environment using the RepeatRadar package. No complex setup required; see the code by expanding the box below.
     """)
 
 with col2:
