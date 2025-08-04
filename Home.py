@@ -32,18 +32,17 @@ with col1:
     
     With RepeatRadar, you can easily generate cohort data and visualize user retention patterns with heatmaps. This package is designed to simplify cohort analysis, making it accessible to data scientists and analysts alike. Install it via `pip install repeatradar` and start analyzing your transaction data!
 
-    This dashboard showcases the package in action and demonstrates my ability to build a Python package and use it in an interactive dashboard – from developing a well-documented Python package to creating an intuitive web interface based on it.
+    This dashboard showcases the package in action and demonstrates my ability to build a Python package and use it in an interactive dashboard.
 
     **What you can explore:**
 
     - 🔍 **Cohort Analysis:** Track user retention and analyze customer lifetime value patterns
     - 📊 **Interactive Visualizations:** Generate publication-ready heatmaps that update in real time  
     - ⚙️ **Flexible Configuration:** Experiment with different time periods, metrics, and aggregation methods
-    - 🔄 **Multiple Datasets:** Compare results across various business scenarios
 
     **Jump right in by picking a dataset from the sidebar and adjusting the analysis settings.**
 
-    Everything you see here – the charts, tables, and insights – can be reproduced in your own Python environment using the RepeatRadar package. No complex setup required; see the code by expanding the box below.
+    The tables, and heatmaps can be reproduced in your own Python environment using the RepeatRadar package. No complex setup required; see the code by expanding the box below.
     """)
 
 with col2:
