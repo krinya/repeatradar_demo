@@ -36,8 +36,8 @@ with col1:
 
     **What you can explore:**
 
-    - 🔍 **Cohort Analysis:** Track user retention and analyze customer lifetime value patterns
-    - 📊 **Interactive Visualizations:** Generate publication-ready heatmaps that update in real time  
+    - 🔍 **Cohort Analysis Tables:** Track user retention and analyze customer lifetime value patterns
+    - 📊 **Interactive Visualizations:** Generate heatmaps easily
     - ⚙️ **Flexible Configuration:** Experiment with different time periods, metrics, and aggregation methods
 
     The tables and heatmaps can be reproduced in your own Python environment using the RepeatRadar package. No complex setup required—see the code by expanding the box below.
